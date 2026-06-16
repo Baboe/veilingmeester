@@ -1,0 +1,20 @@
+{
+  "actorSpecification": 1,
+  "name": "veilingmeester-monitor",
+  "title": "OnlineVeilingMeester.nl Auction Monitor",
+  "description": "Profile-driven auction lot monitor for onlineveilingmeester.nl. Filters lots by keywords and specs, sends Telegram/WhatsApp notifications before auctions end.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "environmentVariables": {},
+  "dockerfile": "../Dockerfile",
+  "readme": "../README.md",
+  "input": "../INPUT_SCHEMA.json",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "title": "Matched lots",
+      "description": "Lots that matched the search profile, with notification status",
+      "views": {}
+    }
+  }
+}

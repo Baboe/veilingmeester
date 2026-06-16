@@ -1,0 +1,129 @@
+{
+  "title": "OnlineVeilingMeester Monitor Input",
+  "description": "Search profile and notification config for auction lot monitoring.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "profile_name": {
+      "title": "Profile name",
+      "type": "string",
+      "description": "Identifier for this search profile, used in log labels and KV store keys.",
+      "default": "default",
+      "editor": "textfield"
+    },
+    "keywords": {
+      "title": "Keywords (lot title match — any one must match)",
+      "type": "array",
+      "description": "List of keyword strings. A lot title must contain at least one keyword (case-insensitive) to be considered. Example: [\"Dell OptiPlex\", \"HP EliteDesk\", \"ThinkCentre\"]",
+      "default": [],
+      "editor": "stringList"
+    },
+    "processor_keywords": {
+      "title": "Processor keywords (any one must match title or description)",
+      "type": "array",
+      "description": "List of processor strings that pass the CPU filter. Include all tiers you accept. Example: [\"i5\", \"i7\", \"i9\"] for i5-or-better. Use [\"i7\", \"i9\"] for i7-only. Leave empty to skip processor check.",
+      "default": ["i5", "i7", "i8", "i9", "core i5", "core i7", "core i9"],
+      "editor": "stringList"
+    },
+    "ram_min_gb": {
+      "title": "Minimum RAM (GB)",
+      "type": "integer",
+      "description": "Minimum RAM in GB. Lot must mention this amount or higher. Set to 0 to skip RAM check.",
+      "default": 8,
+      "minimum": 0,
+      "maximum": 512,
+      "unit": "GB"
+    },
+    "require_ssd": {
+      "title": "Require SSD / NVMe storage",
+      "type": "boolean",
+      "description": "If true, lot must mention SSD, NVMe, or M.2. Lots mentioning only HDD are excluded.",
+      "default": true
+    },
+    "require_power_adapter": {
+      "title": "Require power adapter",
+      "type": "boolean",
+      "description": "If true, lot must explicitly mention a power adapter/charger (Dutch: voeding, lader, adapter). Silence = exclusion.",
+      "default": true
+    },
+    "exclude_if_spec_unconfirmed": {
+      "title": "Exclude lot if any required spec is not mentioned",
+      "type": "boolean",
+      "description": "When true (default), a lot is excluded if a required spec (e.g. power adapter) is simply not mentioned. When false, missing specs are treated as unknown/pass.",
+      "default": true
+    },
+    "max_bid": {
+      "title": "Maximum bid (€)",
+      "type": "integer",
+      "description": "Lots with a current bid above this amount will not trigger notifications. Set to 0 to disable the bid cap.",
+      "default": 60,
+      "minimum": 0,
+      "unit": "EUR"
+    },
+    "suppress_above_max_bid": {
+      "title": "Suppress notifications when bid exceeds max",
+      "type": "boolean",
+      "description": "If true (default), no notification is sent when current bid > max_bid. If false, notifications fire regardless of bid.",
+      "default": true
+    },
+    "notify_minutes_before_end": {
+      "title": "Stage 2 reminder: minutes before auction end",
+      "type": "integer",
+      "description": "How many minutes before lot end time to fire the Stage 2 bid reminder. Default: 60 minutes.",
+      "default": 60,
+      "minimum": 5,
+      "maximum": 1440,
+      "unit": "minutes"
+    },
+    "notifications": {
+      "title": "Notification channels",
+      "type": "object",
+      "description": "Configure Telegram and/or WhatsApp (CallMeBot) notification delivery.",
+      "editor": "json",
+      "default": {
+        "telegram": {
+          "enabled": false,
+          "bot_token": "",
+          "chat_id": ""
+        },
+        "whatsapp_callmebot": {
+          "enabled": false,
+          "phone": "",
+          "api_key": ""
+        }
+      }
+    },
+    "base_url": {
+      "title": "Base URL",
+      "type": "string",
+      "description": "Base URL of the auction site. Change only if the domain changes.",
+      "default": "https://www.onlineveilingmeester.nl",
+      "editor": "textfield"
+    },
+    "language": {
+      "title": "Site language",
+      "type": "string",
+      "description": "Language prefix to use when constructing URLs. 'nl' for Dutch.",
+      "default": "nl",
+      "enum": ["nl", "en"],
+      "enumTitles": ["Dutch (nl)", "English (en)"]
+    },
+    "crawl_delay_seconds": {
+      "title": "Crawl delay between requests (seconds)",
+      "type": "integer",
+      "description": "Delay between page requests to respect robots.txt. Minimum 10 as per site policy.",
+      "default": 10,
+      "minimum": 10,
+      "maximum": 60,
+      "unit": "seconds"
+    },
+    "max_auctions_to_scan": {
+      "title": "Max auction sessions to scan per run",
+      "type": "integer",
+      "description": "Safety cap on auction sessions visited per run. 0 = no limit.",
+      "default": 0,
+      "minimum": 0
+    }
+  },
+  "required": ["profile_name", "keywords"]
+}
