@@ -36,7 +36,7 @@ class ActorConfig:
     profile_name: str = "default"
     keywords: list[str] = field(default_factory=list)
     processor_keywords: list[str] = field(default_factory=lambda: [
-        "i5", "i7", "i8", "i9", "core i5", "core i7", "core i9"
+        "i5", "i7", "i9", "core i5", "core i7", "core i9"
     ])
     ram_min_gb: int = 8
     require_ssd: bool = True
@@ -57,7 +57,7 @@ class ActorConfig:
             profile_name=str(d.get("profile_name", "default")),
             keywords=[str(k) for k in d.get("keywords", [])],
             processor_keywords=[str(k) for k in d.get("processor_keywords", [
-                "i5", "i7", "i8", "i9", "core i5", "core i7", "core i9"
+                "i5", "i7", "i9", "core i5", "core i7", "core i9"
             ])],
             ram_min_gb=int(d.get("ram_min_gb", 8)),
             require_ssd=bool(d.get("require_ssd", True)),

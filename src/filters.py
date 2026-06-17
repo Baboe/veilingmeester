@@ -62,8 +62,7 @@ _POWER_PRESENT = re.compile(
     r"\b(voeding|lader|adapter|oplader)\b"
     r".*?\b(erbij|aanwezig|inbegrepen|inclusief|meegeleverd|ja)\b"
     r"|\b(inclusief|inbegrepen|meegeleverd)\b"
-    r".*?\b(voeding|lader|adapter|oplader)\b"
-    r"|\b(voeding|lader|adapter|oplader)\b",
+    r".*?\b(voeding|lader|adapter|oplader)\b",
     re.IGNORECASE | re.DOTALL,
 )
 

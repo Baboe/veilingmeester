@@ -156,15 +156,13 @@ class VeilingMeesterScraper:
             )
             return
 
-        if over_budget:
-            log.info("Lot %s over budget (€%.0f > €%d)", lot_id, hoogste_bod, cfg.max_bid)
-            return
-
-        # All filters pass — check dedup state
+        # All spec filters pass — check dedup state
         state = await self._store.get_lot_state(cfg.profile_name, lot_id)
 
         if state is None:
-            # New match
+            if over_budget:
+                log.info("Lot %s over budget (€%.0f > €%d), skipping", lot_id, hoogste_bod, cfg.max_bid)
+                return
             if minutes_left < cfg.notify_minutes_before_end:
                 msg = format_urgent(lot_naam, hoogste_bod, minutes_left, url, spec_result)
                 log.info("URGENT new lot %s (%d min left)", lot_id, minutes_left)
