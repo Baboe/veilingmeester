@@ -1,4 +1,4 @@
-FROM apify/actor-python-playwright:3.11
+FROM apify/actor-python:3.11
 
 WORKDIR /usr/src/app
 
