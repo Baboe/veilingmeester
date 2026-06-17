@@ -14,22 +14,22 @@
     "keywords": {
       "title": "Keywords (lot title match — any one must match)",
       "type": "array",
-      "description": "List of keyword strings. A lot title must contain at least one keyword (case-insensitive) to be considered. Example: [\"Dell OptiPlex\", \"HP EliteDesk\", \"ThinkCentre\"]",
+      "description": "List of keyword strings. A lot title must contain at least one keyword (case-insensitive) to be considered. Leave empty to scan all lots regardless of title. Example: [\"vintage camera\", \"road bike\", \"coffee machine\"]",
       "default": [],
       "editor": "stringList"
     },
     "processor_keywords": {
       "title": "Processor keywords (any one must match title or description)",
       "type": "array",
-      "description": "List of processor strings that pass the CPU filter. Include all tiers you accept. Example: [\"i5\", \"i7\", \"i9\"] for i5-or-better. Use [\"i7\", \"i9\"] for i7-only. Leave empty to skip processor check.",
-      "default": ["i5", "i7", "i8", "i9", "core i5", "core i7", "core i9"],
+      "description": "Computer/electronics filter: at least one of these strings must appear in the lot's specs. Useful for filtering by CPU generation, GPU model, etc. Example: [\"i5\", \"i7\", \"i9\"] for i5-or-better. Leave empty to skip this check (recommended for non-electronics categories).",
+      "default": [],
       "editor": "stringList"
     },
     "ram_min_gb": {
       "title": "Minimum RAM (GB)",
       "type": "integer",
       "description": "Minimum RAM in GB. Lot must mention this amount or higher. Set to 0 to skip RAM check.",
-      "default": 8,
+      "default": 0,
       "minimum": 0,
       "maximum": 512,
       "unit": "GB"
@@ -37,26 +37,26 @@
     "require_ssd": {
       "title": "Require SSD / NVMe storage",
       "type": "boolean",
-      "description": "If true, lot must mention SSD, NVMe, or M.2. Lots mentioning only HDD are excluded.",
-      "default": true
+      "description": "Computer/electronics filter: if true, lot must mention SSD, NVMe, or M.2. Lots mentioning only HDD are excluded. Leave false for non-electronics categories.",
+      "default": false
     },
     "require_power_adapter": {
       "title": "Require power adapter",
       "type": "boolean",
-      "description": "If true, lot must explicitly mention a power adapter/charger (Dutch: voeding, lader, adapter). Silence = exclusion.",
-      "default": true
+      "description": "If true, lot must explicitly mention a power adapter/charger included in the lot (Dutch: voeding, lader, adapter). Silence = exclusion. Leave false if this is not relevant to your category.",
+      "default": false
     },
     "exclude_if_spec_unconfirmed": {
       "title": "Exclude lot if any required spec is not mentioned",
       "type": "boolean",
-      "description": "When true (default), a lot is excluded if a required spec (e.g. power adapter) is simply not mentioned. When false, missing specs are treated as unknown/pass.",
+      "description": "When true (default), a lot is excluded if a required spec is simply not mentioned in the lot description. When false, missing specs are treated as unknown/pass.",
       "default": true
     },
     "max_bid": {
       "title": "Maximum bid (€)",
       "type": "integer",
       "description": "Lots with a current bid above this amount will not trigger notifications. Set to 0 to disable the bid cap.",
-      "default": 60,
+      "default": 0,
       "minimum": 0,
       "unit": "EUR"
     },
