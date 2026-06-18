@@ -12,7 +12,7 @@ from apify import Actor
 
 from .client import VeilingMeesterClient
 from .config import ActorConfig
-from .filters import all_specs_pass, keyword_match, spec_check
+from .filters import all_specs_pass, auction_title_skip, keyword_match, spec_check
 from .notifier import (
     format_bid_reminder,
     format_discovery,
@@ -57,8 +57,17 @@ class VeilingMeesterScraper:
             if cfg.max_auctions_to_scan and len(auctions) > cfg.max_auctions_to_scan:
                 auctions = auctions[: cfg.max_auctions_to_scan]
 
+            skipped = 0
             for auction in auctions:
+                naam = auction.get("naam", "")
+                if auction_title_skip(naam, cfg.skip_auction_keywords):
+                    log.info("Skipping auction %s — %s (matched skip keyword)", auction.get("id"), naam)
+                    skipped += 1
+                    continue
                 await self._process_auction(client, auction, now)
+
+            if skipped:
+                log.info("Skipped %d/%d auctions by title filter", skipped, len(auctions))
 
         # Write all collected rows to Apify Dataset
         if self._dataset_rows:

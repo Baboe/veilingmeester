@@ -18,6 +18,13 @@
       "default": [],
       "editor": "stringList"
     },
+    "skip_auction_keywords": {
+      "title": "Skip auction keywords (auction title filter)",
+      "type": "array",
+      "description": "If any of these strings appear in an auction's title (case-insensitive), the entire auction is skipped without fetching its lots. Saves time by ignoring obviously irrelevant categories. Example for electronics: [\"sieraden\", \"fietsen\", \"voertuigen\", \"watersport\", \"agrarisch\", \"motoren\", \"hout\"]",
+      "default": [],
+      "editor": "stringList"
+    },
     "processor_keywords": {
       "title": "Processor keywords (any one must match title or description)",
       "type": "array",

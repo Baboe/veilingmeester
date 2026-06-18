@@ -31,10 +31,18 @@ def strip_html(html: str) -> str:
     return s.get_text()
 
 
-def keyword_match(lot_naam: str, keywords: list[str]) -> bool:
-    """True if any keyword appears in lot_naam (case-insensitive substring)."""
-    name_lower = lot_naam.lower()
-    return any(kw.lower() in name_lower for kw in keywords)
+def keyword_match(text: str, keywords: list[str]) -> bool:
+    """True if any keyword appears in text (case-insensitive substring)."""
+    text_lower = text.lower()
+    return any(kw.lower() in text_lower for kw in keywords)
+
+
+def auction_title_skip(auction_naam: str, skip_keywords: list[str]) -> bool:
+    """True if the auction title contains any skip keyword — the auction should be skipped."""
+    if not skip_keywords:
+        return False
+    naam_lower = auction_naam.lower()
+    return any(kw.lower() in naam_lower for kw in skip_keywords)
 
 
 # RAM: context-aware — prefer values near RAM keywords; avoid storage values.
